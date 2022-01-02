@@ -1,6 +1,4 @@
 import sys
-from decimal import Decimal
-
 
 def interface():
     print(""" __       __           ______             __                      __              __                         
