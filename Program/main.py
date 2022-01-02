@@ -12,14 +12,14 @@ $$ $$ $$/$$ |$$$$$$/ $$ |   __  /    $$ |$$ |$$ |      $$ |  $$ |$$ | /    $$ | 
 $$ |$$$/ $$ |        $$ \__/  |/$$$$$$$ |$$ |$$ \_____ $$ \__$$ |$$ |/$$$$$$$ |  $$ |/  |$$ \__$$ |$$ |      
 $$ | $/  $$ |        $$    $$/ $$    $$ |$$ |$$       |$$    $$/ $$ |$$    $$ |  $$  $$/ $$    $$/ $$ |      
 $$/      $$/          $$$$$$/   $$$$$$$/ $$/  $$$$$$$/  $$$$$$/  $$/  $$$$$$$/    $$$$/   $$$$$$/  $$/       
-                                                                                                             
-                                                                                                             
+
+
                                                                                                              v.0.1""")
     try:
         choice()
     except ValueError:
         print("Please enter a valid number as a choice.\n")
-        choice()
+        interface()
 
 
 def show_options():
@@ -27,9 +27,7 @@ def show_options():
     print("Press the number to enter the option")
     print("0. Information & Usage (menu)")
     print("1. Mortgage Calculator ")
-    print("2. Custom Subscription Calculator")
-    print("3. Savings")
-    print("4. About the program")
+    print("2. About the project")
     print("Enter 'q' to exit")
     print("#####MENU#####\n")
 
@@ -59,14 +57,9 @@ def switch(num):
     elif num == 2:
         option_two()
         choice()
-    elif num == 3:
-        option_three()
-        choice()
-    elif num == 4:
-        option_four()
-        choice()
     else:
-        print("Oops, something went wrong...\nPlease restart the application")
+        print("\nOops, something went wrong...\nRestarting the application...")
+        choice()
 
 
 # different options
@@ -81,9 +74,7 @@ def option_one():
     print("#####OPTION: MORTGAGE CALCULATOR#####")
     # TODO later: make default values for calculation
     # needed user input variables for formula
-    a_r = float(input("Yearly interest rate: "))  # monthly interest rate
-    N = float(input("Number of years for payment --> Loan's term: ")) * 12  # number of monthly payments
-    P = float(input("Amount borrowed(in USD) --> Loan's principal: "))
+    a_r, N, P = first_input()
     r = a_r / 100 / 12
     result = (r * P * (1 + r) ** N) / ((1 + r) ** N - 1)
     if fixed_or_adjustable():
@@ -120,6 +111,7 @@ def option_one():
 
         # the adjustment calculation may be wrong --> differs from online
 
+
 # method for determining which formula should be used
 def fixed_or_adjustable():
     answer = int(input("Is your mortgage fixed or adjustable?\nPlease enter '0' for fixed and '1' for adjustable: "))
@@ -129,20 +121,27 @@ def fixed_or_adjustable():
         return False
 
 
+def first_input():
+    try:
+        a_r = float(input("Yearly interest rate: "))  # monthly interest rate
+        N = float(input("Number of years for payment --> Loan's term: ")) * 12  # number of monthly payments
+        P = float(input("Amount borrowed(in USD) --> Loan's principal: "))
+        return a_r, N, P
+    except ValueError:
+        print("Incorrect input. Please enter again.")
+        first_input()
+
+
 def option_two():
-    return 2
-
-
-def option_three():
-    return 3
-
-
-def option_four():
-    return 4
+    print("\nWhy this project?")
+    print("It is a starting project of mine for diving into Python and exploring its possibilities.\nI just found "
+          "this project idea in my Codecademy Course and thought this would be a great starting project as it also "
+          "has some real-life appliance.\nIf you have found some kind of bugs, issues or update ideas...feel free to "
+          "notify me about them")
 
 
 # Shows the menu at the start
 try:
     interface()
 except KeyboardInterrupt:
-    print("\nThe User has terminated the program via keyboard.")
+    sys.exit("User has terminated the program")
